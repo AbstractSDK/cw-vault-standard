@@ -48,7 +48,7 @@ pub trait CwVaultStandardRobot<'a, R: Runner<'a> + 'a>: TestRobot<'a, R> {
         unwrap_choice.unwrap(self.wasm().execute(
             &self.vault_addr(),
             &ExecuteMsg::<Empty>::Deposit { amount, recipient },
-            funds,
+            &crate::coins2_to_coins1(funds),
             signer,
         ));
         self
@@ -82,7 +82,7 @@ pub trait CwVaultStandardRobot<'a, R: Runner<'a> + 'a>: TestRobot<'a, R> {
         let base_token_denom = self.query_info().base_token;
         let amount = self.query_native_token_balance(signer.address(), base_token_denom);
 
-        self.deposit(amount, recipient, unwrap_choice, signer)
+        self.deposit(amount.u128(), recipient, unwrap_choice, signer)
     }
 
     /// Calls `ExecuteMsg::Redeem` with the given amount and funds.
@@ -97,7 +97,7 @@ pub trait CwVaultStandardRobot<'a, R: Runner<'a> + 'a>: TestRobot<'a, R> {
         unwrap_choice.unwrap(self.wasm().execute(
             &self.vault_addr(),
             &ExecuteMsg::<Empty>::Redeem { amount, recipient },
-            funds,
+            &crate::coins2_to_coins1(funds),
             signer,
         ));
         self
@@ -129,7 +129,7 @@ pub trait CwVaultStandardRobot<'a, R: Runner<'a> + 'a>: TestRobot<'a, R> {
     ) -> &Self {
         let amount =
             self.query_native_token_balance(signer.address(), self.query_info().vault_token);
-        self.redeem(amount, recipient, unwrap_choice, signer)
+        self.redeem(amount.u128().into(), recipient, unwrap_choice, signer)
     }
 
     /////// QUERIES ///////
@@ -141,6 +141,8 @@ pub trait CwVaultStandardRobot<'a, R: Runner<'a> + 'a>: TestRobot<'a, R> {
     fn query_vault_token_balance(&self, address: impl Into<String>) -> Uint128 {
         let info = self.query_info();
         self.query_native_token_balance(address, info.vault_token)
+            .u128()
+            .into()
     }
 
     /////// ASSERTIONS ///////

@@ -26,7 +26,7 @@ pub trait ForceUnlockVaultRobot<'a, R: Runner<'a> + 'a>: CwVaultStandardRobot<'a
                     amount: amount.into(),
                 },
             )),
-            funds,
+            &crate::coins2_to_coins1(funds),
             signer,
         ));
         self

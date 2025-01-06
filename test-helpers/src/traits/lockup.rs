@@ -23,7 +23,7 @@ pub trait LockedVaultRobot<'a, R: Runner<'a> + 'a>: CwVaultStandardRobot<'a, R> 
             &ExecuteMsg::VaultExtension(ExtensionExecuteMsg::Lockup(LockupExecuteMsg::Unlock {
                 amount: amount.into(),
             })),
-            funds,
+            &crate::coins2_to_coins1(funds),
             signer,
         ));
         self
