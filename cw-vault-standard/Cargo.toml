@@ -28,3 +28,4 @@ serde           = { workspace = true }
 cosmwasm-schema = { workspace = true }
 cw-utils        = { workspace = true, optional = true }
 cw20            = { workspace = true, optional = true }
+cw-orch         = { workspace = true }

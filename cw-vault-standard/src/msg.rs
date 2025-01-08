@@ -13,6 +13,7 @@ use schemars::JsonSchema;
 /// This enum can be extended with additional variants by defining an extension
 /// enum and then passing it as the generic argument `T` to this enum.
 #[cw_serde]
+#[derive(cw_orch::ExecuteFns)]
 pub enum VaultStandardExecuteMsg<T = ExtensionExecuteMsg> {
     /// Called to deposit into the vault. Native assets are passed in the funds
     /// parameter.
@@ -85,7 +86,7 @@ pub enum ExtensionExecuteMsg {
 /// This enum can be extended with additional variants by defining an extension
 /// enum and then passing it as the generic argument `T` to this enum.
 #[cw_serde]
-#[derive(QueryResponses)]
+#[derive(QueryResponses, cw_orch::QueryFns)]
 pub enum VaultStandardQueryMsg<T = ExtensionQueryMsg>
 where
     T: JsonSchema,
