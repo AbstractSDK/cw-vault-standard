@@ -17,6 +17,7 @@ use schemars::JsonSchema;
 pub enum VaultStandardExecuteMsg<T = ExtensionExecuteMsg> {
     /// Called to deposit into the vault. Native assets are passed in the funds
     /// parameter.
+    #[cw_orch(payable)]
     Deposit {
         /// The amount of base tokens to deposit.
         #[deprecated(
@@ -34,6 +35,7 @@ pub enum VaultStandardExecuteMsg<T = ExtensionExecuteMsg> {
     /// The native vault token must be passed in the funds parameter, unless the
     /// lockup extension is called, in which case the vault token has already
     /// been passed to ExecuteMsg::Unlock.
+    #[cw_orch(payable)]
     Redeem {
         /// An optional field containing which address should receive the
         /// withdrawn base tokens. If not set, the caller address will be
@@ -54,6 +56,7 @@ pub enum VaultStandardExecuteMsg<T = ExtensionExecuteMsg> {
     },
 
     /// Called to execute functionality of any enabled extensions.
+    #[cw_orch(payable)]
     VaultExtension(T),
 }
 
