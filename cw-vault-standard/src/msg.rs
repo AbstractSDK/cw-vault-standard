@@ -57,6 +57,7 @@ pub enum VaultStandardExecuteMsg<T = ExtensionExecuteMsg> {
 
     /// Called to execute functionality of any enabled extensions.
     #[cw_orch(payable)]
+    #[cw_orch(fn_name("vault_execute_extension"))]
     VaultExtension(T),
 }
 
@@ -197,6 +198,7 @@ where
     },
 
     /// Handle queries of any enabled extensions.
+    #[cw_orch(fn_name("vault_query_extension"))]
     #[returns(Empty)]
     VaultExtension(T),
 }
